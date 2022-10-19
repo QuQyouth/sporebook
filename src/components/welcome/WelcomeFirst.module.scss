@@ -1,0 +1,40 @@
+.wrapper{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    >.card{
+        flex: 1;
+        background: var(--welcome-card-bg);
+        border-radius: 8px;
+        padding: 16px;
+        margin: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .tips{
+            width: 128px;
+            height: 128px;
+            border: 1px black solid;
+        }
+        .tipsText{
+            margin-top: 40px;
+            font-size: 32px;
+        }
+    }
+
+    >.actions{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 16px;
+        margin-bottom: 8px;
+        color: var(--welcome-actions-text);
+        >.fake{
+            visibility: hidden;
+        }
+    }
+
+
+}
