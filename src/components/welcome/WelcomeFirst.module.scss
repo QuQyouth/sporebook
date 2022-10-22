@@ -1,8 +1,9 @@
-.wrapper{
+.wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
-    >.card{
+    padding-bottom: var(--welcome-nav-gap);
+    >.card {
         flex: 1;
         background: var(--welcome-card-bg);
         border-radius: 8px;
@@ -12,29 +13,33 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
-        .tips{
+        .tips {
             width: 128px;
             height: 128px;
             border: 1px black solid;
         }
-        .tipsText{
+        .tipsText {
             margin-top: 40px;
             font-size: 32px;
         }
     }
-
-    >.actions{
+    >.actions {
+        position: fixed;
+        height: var(--welcome-nav-height);
+        z-index: var(--z-index-bottom-nav);
+        background: var(--welcome-bg-end);
+        left: 0;
+        bottom: 0;
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 0 16px;
-        margin-bottom: 8px;
         color: var(--welcome-actions-text);
-        >.fake{
+        padding-bottom: var(--welcome-nav-gap);
+        padding-left: 16px;
+        padding-right: 16px;
+        >.fake {
             visibility: hidden;
         }
     }
-
-
 }

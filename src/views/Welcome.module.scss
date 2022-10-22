@@ -1,21 +1,22 @@
-.wrapper{
-    height: 100vh;
+.wrapper {
+    height: calc(100vh - var(--welcome-nav-height) + 1px);
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to bottom, #fff 0%, #00796B 100%);
-    > header{
+    background: linear-gradient(to bottom, var(--welcome-bg-start) 0%, var(--welcome-bg-end) 100%);
+    margin-bottom: var(--welcome-nav-height);
+    >header {
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         color: #003366;
-        .logo{
+        padding-top: 30px;
+        .logo {
             width: 200px;
         }
     }
-
-    > main{
+    >main {
         flex: 1;
         display: flex;
     }
