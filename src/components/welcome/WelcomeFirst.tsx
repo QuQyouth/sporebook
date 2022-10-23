@@ -1,6 +1,5 @@
 import {WelcomeLayout} from "./WelcomeLayout"
 import icon from '../../assets/icons/welcomeIcon.png'
-import { ActionsFirst } from "./ActionsFirst"
 
 export const WelcomeFirst = () => {
     return <WelcomeLayout>

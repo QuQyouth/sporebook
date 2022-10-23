@@ -1,16 +1,33 @@
 import { defineComponent, ref, Transition, VNode, watchEffect } from "vue";
-import { RouteLocationNormalizedLoaded, RouterView } from "vue-router";
+import { RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter } from "vue-router";
 import s from "./Welcome.module.scss";
 import logo from "../assets/icons/spore.png";
 import { useSwipe } from "../hooks/useSwipe";
+import { throttle } from "../shared/throttle";
 
 export const Welcome = defineComponent({
     setup: (props,context) => {
-        const main = ref<HTMLElement | null>(null)
-        const {direction,swiping} = useSwipe(main)
+        const main = ref<HTMLElement>()
+        const {direction,swiping} = useSwipe(main,{beforeStart: e=>e.preventDefault()})
+        const route = useRoute()
+        const router = useRouter()
+
+        // 节流防抖
+        const pushRouter = throttle(()=>{
+            if (route.name === 'Welcome1') {
+                router.push('/welcome/2')
+            }else if (route.name === 'Welcome2') {
+                router.push('/welcome/3')
+            }else if (route.name === 'Welcome3') {
+                router.push('/welcome/4')
+            }else if (route.name === 'Welcome4') {
+                router.push('/start')
+            }
+        },500)
         watchEffect(()=>{
-            console.log(swiping.value, direction.value);
-            
+            if (swiping.value && direction.value === 'left') {
+                pushRouter()
+            }
         })
         return () => (
             <div class={s.wrapper}>

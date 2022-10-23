@@ -16,10 +16,10 @@ export const routes: RouteRecordRaw[] = [
         component: Welcome,
         children:[
             {path: '', redirect:'/welcome/1'},
-            { path: '1', components: { main: WelcomeFirst, footer: ActionsFirst }, },
-            { path: '2', components: { main: WelcomeSecond, footer: ActionsSecond }, },
-            { path: '3', components: { main: WelcomeThird, footer: ActionsThird }, },
-            { path: '4', components: { main: WelcomeForth, footer: ActionsForth }, },
+            { path: '1', name:'Welcome1', components: { main: WelcomeFirst, footer: ActionsFirst }, },
+            { path: '2', name:'Welcome2', components: { main: WelcomeSecond, footer: ActionsSecond }, },
+            { path: '3', name:'Welcome3', components: { main: WelcomeThird, footer: ActionsThird }, },
+            { path: '4', name:'Welcome4', components: { main: WelcomeForth, footer: ActionsForth }, },
         ]
     }
 ]
