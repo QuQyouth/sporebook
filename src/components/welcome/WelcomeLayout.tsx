@@ -12,9 +12,6 @@ export const WelcomeLayout:FunctionalComponent = (props,context) =>{
                         {title?.()}
                     </div>
                 </div>
-                <div class={s.actions}>
-                    {buttons?.()}
-                </div>
             </div>
         )
 }

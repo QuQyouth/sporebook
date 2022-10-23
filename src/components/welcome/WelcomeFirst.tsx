@@ -1,17 +1,12 @@
-import { RouterLink } from "vue-router";
 import {WelcomeLayout} from "./WelcomeLayout"
-import s from './WelcomeLayout.module.scss';
+import icon from '../../assets/icons/welcomeIcon.png'
+import { ActionsFirst } from "./ActionsFirst"
 
 export const WelcomeFirst = () => {
     return <WelcomeLayout>
         {{
-            icon: ()=> <>icon</>,
-            title:()=><>welcome1</>,
-            buttons:()=><>
-                <RouterLink class={s.fake} to="/start">跳过</RouterLink>
-                <RouterLink to="/welcome/2">下一页</RouterLink>
-                <RouterLink to="/start">跳过</RouterLink>
-            </>
+            icon: ()=> <img src={icon} alt="" />,
+            title:()=><>welcome1</>
         }}
     </WelcomeLayout>
 }

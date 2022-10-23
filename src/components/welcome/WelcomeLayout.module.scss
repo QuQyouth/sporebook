@@ -16,30 +16,34 @@
         .tips {
             width: 128px;
             height: 128px;
-            border: 1px black solid;
+            overflow: hidden;
+            >img {
+                width: 100%;
+            }
         }
         .tipsText {
             margin-top: 40px;
             font-size: 32px;
         }
     }
-    >.actions {
-        position: fixed;
-        height: var(--welcome-nav-height);
-        z-index: var(--z-index-bottom-nav);
-        background: var(--welcome-bg-end);
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--welcome-actions-text);
-        padding-bottom: var(--welcome-nav-gap);
-        padding-left: 16px;
-        padding-right: 16px;
-        >.fake {
-            visibility: hidden;
-        }
+}
+
+.actions {
+    position: fixed;
+    height: var(--welcome-nav-height);
+    z-index: var(--z-index-bottom-nav);
+    background: var(--welcome-bg-end);
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--welcome-actions-text);
+    padding-bottom: var(--welcome-nav-gap);
+    padding-left: 16px;
+    padding-right: 16px;
+    >.fake {
+        visibility: hidden;
     }
 }

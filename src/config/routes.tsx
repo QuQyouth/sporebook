@@ -1,4 +1,8 @@
 import {RouteRecordRaw} from "vue-router"
+import { ActionsFirst } from "../components/welcome/ActionsFirst";
+import { ActionsForth } from "../components/welcome/ActionsForth";
+import { ActionsSecond } from "../components/welcome/ActionsSecond";
+import { ActionsThird } from "../components/welcome/ActionsThird";
 import { WelcomeFirst } from "../components/welcome/WelcomeFirst";
 import { WelcomeForth } from "../components/welcome/WelcomeForth";
 import { WelcomeSecond } from "../components/welcome/WelcomeSecond";
@@ -12,10 +16,10 @@ export const routes: RouteRecordRaw[] = [
         component: Welcome,
         children:[
             {path: '', redirect:'/welcome/1'},
-            {path: '1', component:WelcomeFirst},
-            {path: '2', component:WelcomeSecond},
-            {path: '3', component:WelcomeThird},
-            {path: '4', component:WelcomeForth}
+            { path: '1', components: { main: WelcomeFirst, footer: ActionsFirst }, },
+            { path: '2', components: { main: WelcomeSecond, footer: ActionsSecond }, },
+            { path: '3', components: { main: WelcomeThird, footer: ActionsThird }, },
+            { path: '4', components: { main: WelcomeForth, footer: ActionsForth }, },
         ]
     }
 ]
