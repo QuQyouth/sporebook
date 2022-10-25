@@ -7,6 +7,7 @@ import { WelcomeFirst } from "../components/welcome/WelcomeFirst";
 import { WelcomeForth } from "../components/welcome/WelcomeForth";
 import { WelcomeSecond } from "../components/welcome/WelcomeSecond";
 import { WelcomeThird } from "../components/welcome/WelcomeThird";
+import { StartPage } from "../views/StartPage";
 import { Welcome } from "../views/Welcome";
 
 export const routes: RouteRecordRaw[] = [
@@ -21,5 +22,6 @@ export const routes: RouteRecordRaw[] = [
             { path: '3', name:'Welcome3', components: { main: WelcomeThird, footer: ActionsThird }, },
             { path: '4', name:'Welcome4', components: { main: WelcomeForth, footer: ActionsForth }, },
         ]
-    }
+    },
+    {path:'/start',component: StartPage}
 ]
