@@ -1,4 +1,6 @@
 import { defineComponent, ref } from "vue";
+import { RouterLink } from "vue-router";
+import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
 import { Center } from "../shared/Center";
 import { FloatButton } from "../shared/FloatButton";
@@ -16,27 +18,28 @@ export const StartPage = defineComponent({
             console.log(refOverlayVisible.value);
         }
         return () => (
-            <div>
-                <nav>
-                    <Navbar>
-                        {{
-                            default: () => '孢子记账',
-                            icon: () => <Icon name="menu" onClick={onClickMenu} />,
-                        }}
-                    </Navbar>
-                </nav>
-                <Center class={s.money_wrapper}>
-                    <Icon name="tipsMoney" class={s.tipsMoney} />
-                </Center>
-                <div class={s.button_wrapper}>
-                    <Button>开始记账</Button>
-                </div>
-                <FloatButton iconName="add"></FloatButton>
-                {refOverlayVisible.value && 
-                    <Overlay onClose={() => refOverlayVisible.value = false}/>
-                }
-                
-            </div>
+            <MainLayout>
+                {{
+                    title: () => '孢子记账',
+                    icon: () => <Icon name="menu" onClick={onClickMenu} />,
+                    default: () => <>
+                        <Center class={s.money_wrapper}>
+                            <Icon name="tipsMoney" class={s.tipsMoney} />
+                        </Center>
+                        <div class={s.button_wrapper}>
+                            <RouterLink to='/items/create'>
+                                <Button>开始记账</Button>
+                            </RouterLink>
+                        </div>
+                        <RouterLink to='/items/create'>
+                            <FloatButton iconName="add"></FloatButton>
+                        </RouterLink>
+                        {refOverlayVisible.value && 
+                            <Overlay onClose={() => refOverlayVisible.value = false}/>
+                        }
+                    </>
+                }}
+            </MainLayout>
         )
     }
 })
