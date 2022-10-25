@@ -6,7 +6,7 @@ export const FloatButton = defineComponent({
         iconName: {
             type: String as PropType<IconName>,
             require: true,
-        }
+        },
     },
     setup: (props,context) => {
         return () => (

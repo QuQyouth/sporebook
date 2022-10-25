@@ -1,20 +1,27 @@
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { Button } from "../shared/Button";
 import { Center } from "../shared/Center";
 import { FloatButton } from "../shared/FloatButton";
 import { Icon } from "../shared/Icon";
 import { Navbar } from "../shared/Navbar";
+import { Overlay } from "../shared/Overlay";
 import s from './StartPage.module.scss';
 
 export const StartPage = defineComponent({
-   setup: (props,context) => {
-       return () => (
-           <div>
+    setup: (props,context) => {
+        const refOverlayVisible = ref(false)
+        const onClickMenu = () => {
+            
+            refOverlayVisible.value = !refOverlayVisible.value
+            console.log(refOverlayVisible.value);
+        }
+        return () => (
+            <div>
                 <nav>
                     <Navbar>
                         {{
-                            default: '孢子记账',
-                            icon: <Icon name="menu"/>
+                            default: () => '孢子记账',
+                            icon: () => <Icon name="menu" onClick={onClickMenu} />,
                         }}
                     </Navbar>
                 </nav>
@@ -25,8 +32,11 @@ export const StartPage = defineComponent({
                     <Button>开始记账</Button>
                 </div>
                 <FloatButton iconName="add"></FloatButton>
-            
-           </div>
-       )
-   }
+                {refOverlayVisible.value && 
+                    <Overlay onClose={() => refOverlayVisible.value = false}/>
+                }
+                
+            </div>
+        )
+    }
 })

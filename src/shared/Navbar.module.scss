@@ -5,7 +5,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    padding: 12px 8px;
+    padding: var(--top-safe-area-height) 8px;
     .icon_wrapper {
         width: 32px;
         height: 32px;
