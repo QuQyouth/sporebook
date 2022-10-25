@@ -21,7 +21,7 @@ export const Overlay = defineComponent({
                             <p>点击这里登录</p>
                         </section>
                         <nav>
-                            <ul>
+                            <ul class={s.action_list}>
                                 <li>
                                     <Icon name="chart"/>
                                 </li>
