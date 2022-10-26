@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { defineComponent } from "vue";
 import { Icon } from "../../shared/Icon";
 import s from './InputPad.module.scss';
@@ -29,7 +30,7 @@ export const InputPad = defineComponent({
                     </div>
                     <div class={s.date}>
                         <Icon name='note' />
-                        <span>2022-10-26</span>
+                        <span>{dayjs().format('YYYY-MM-DD HH:mm:ss')}</span>
                     </div>
                 </div>
                 <div class={s.buttons}>
