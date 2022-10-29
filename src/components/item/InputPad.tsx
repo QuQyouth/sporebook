@@ -13,9 +13,7 @@ export const InputPad = defineComponent({
         const refCurrentDate = ref<Date>(new Date())
         const refAmount = ref('0') //当前未输入完的数据
         // const refAmountList = reactive<number[]>([]) //<number[]>添加泛型
-        const refNumberList = reactive({pre:'0',cur:'0'})
-        const refDisplayAmount = ref('') //这里refDisplayAmount + refAmount是需要展示的数据
-        const refSign = ref('')
+        const refNumberList = reactive({pre:'',cur:'0'})
         const buttons = [
             {text: '1', onClick: ()=>{appendText(1)}},
             {text: '2', onClick: ()=>{appendText(2)}},
@@ -35,68 +33,83 @@ export const InputPad = defineComponent({
             {text: '=', onClick: ()=>{performOperation('=')}},
         ]
         const operationEmpty = () => {
-            refAmount.value = '0'
-            refNumberList.pre = '0'
+            refNumberList.pre = ''
             refNumberList.cur = '0'
-            refDisplayAmount.value = ''
         }
         const performOperation = (e: "=") => {
-            const result = eval(refAmount.value)
-            refAmount.value = result.toFixed(2)
+            refNumberList.pre += refNumberList.cur
+            refNumberList.cur = ''
+            let resultLast = refNumberList.pre.charAt(refNumberList.pre.length - 1)
+            // 去除最后一个无用符号
+            if (!Number(resultLast)) {
+                refNumberList.pre = refNumberList.pre.substring(0, refNumberList.pre.length - 1)
+            }
+            try{
+                // 这里注意toFixed返回的是string; Number()可以去掉小数点后多余的0
+                refNumberList.pre = Number(eval(refNumberList.pre).toFixed(2)).toString()
+            }catch(e){
+                console.warn(e)
+            }
         }
         const deleteLast = () => {
-            refAmount.value = refAmount.value.substring(0, refAmount.value.length - 1)
+            if (refNumberList.cur) {
+                refNumberList.cur = refNumberList.cur.substring(0, refNumberList.cur.length - 1)
+            }else{
+                refNumberList.pre = refNumberList.pre.substring(0, refNumberList.pre.length - 1)
+            }
+            
         }
 
         const addOrSubtract = (e: '+'|'-') => {
-            // 这里注意toFixed返回的是string; Number可以去掉小数点后多余的0
-            refNumberList.cur = parseFloat(refAmount.value).toFixed(2)
-            const preNumber = parseFloat(refNumberList.pre)
-            const curNumber = parseFloat(refNumberList.cur)
-            if(e === '+'){
-                refNumberList.pre = Number((curNumber + preNumber).toFixed(2)).toString()
-            }else{
-                debugger
-                refNumberList.pre = Number((curNumber - preNumber).toFixed(2)).toString()
+
+            refNumberList.pre += refNumberList.cur
+            
+            let resultLast = refNumberList.pre.charAt(refNumberList.pre.length - 1)
+            // 去除最后一个无用符号
+            if (!Number(resultLast)) {
+                refNumberList.pre = refNumberList.pre.substring(0, refNumberList.pre.length - 1)
             }
-            debugger
-            refDisplayAmount.value = refNumberList.pre + e
-            refAmount.value = ''
-            refNumberList.cur = '0'
+            
+            if(!Number(refNumberList.pre)){
+                
+                try{
+                    // 这里注意toFixed返回的是string; Number()可以去掉小数点后多余的0
+                    refNumberList.pre = Number(eval(refNumberList.pre).toFixed(2)).toString()
+                }catch(e){
+                    console.warn(e)
+                }
+            }
+            refNumberList.cur = ''
+            
+            appendText(e)
         }
 
-        //每个数字的逻辑
         const appendText = (n: number | string) => {
             const nString = n.toString()
-            const dotIndex = refAmount.value.indexOf('.')
-            if (refAmount.value.length >= 13) {
+            const dotIndex = refNumberList.cur.indexOf('.')
+            if (refNumberList.cur.length >= 13) {
                 return
             }
 
-            // if (dotIndex >= 0 && refAmount.value.length - dotIndex > 2) return
+            if (dotIndex >= 0 && refNumberList.cur.length - dotIndex > 2) return
 
-            if (nString === '.') {
-                
-                // const currentList = [...refAmount.value]
-                // const signList = currentList.filter(item => item === "+" || item === "-" )
-                
-                // const numberList = refAmount.value.split(/[+]|-/)
-                
+            if (nString === '.') {                
                 if (dotIndex >= 0) { // 已经有小数点了
                     return
                 }
             } else if (nString === '0') {
                 if (dotIndex === -1) { // 没有小数点
-                if (refAmount.value === '0') { // 没小数点，但是有0
+                if (refNumberList.cur === '0') { // 没小数点，但是有0
                     return
                 }
                 }
             } else {
-                if (refAmount.value === '0') {
-                refAmount.value = ''
+                if (refNumberList.cur === '0') {
+                    refNumberList.cur = ''
                 }
             }
-            refAmount.value += n.toString()
+            refNumberList.cur += n.toString()
+            
         }
         const hideDatePicker = () => refShowPop.value = false
         const showDatePicker = () => refShowPop.value = true
@@ -105,7 +118,7 @@ export const InputPad = defineComponent({
             <div>
                 <div class={s.padNav}>
                     <span class={s.amount}>
-                        {refDisplayAmount.value + refAmount.value}
+                        {refNumberList.pre + refNumberList.cur}
                     </span>
                     <span class={s.date}>
                         <Icon name='note' />
