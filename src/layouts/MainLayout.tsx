@@ -7,8 +7,9 @@ export const MainLayout = defineComponent({
                 <nav>
                     <Navbar>
                         {{
-                            default: () => context.slots.title?.(),
+                            tittle: () => context.slots.title?.(),
                             icon: () => context.slots.icon?.(),
+                            default: () => context.slots.title?.(),
                         }}
                     </Navbar>
                 </nav>
