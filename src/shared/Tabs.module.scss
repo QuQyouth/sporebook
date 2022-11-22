@@ -1,10 +1,10 @@
 .tabs {
-    background-color: rgba($color: #000000, $alpha: 0.5);
     &_nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
         text-align: center;
+        background: var(--nav-bg-end);
         color: var(--nav-text);
         >li {
             flex-grow: 1;
