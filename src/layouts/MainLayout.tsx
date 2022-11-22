@@ -1,18 +1,17 @@
 import { defineComponent } from "vue";
 import { Navbar } from "../shared/Navbar";
+import s from './MainLayout.module.scss'
 export const MainLayout = defineComponent({
     setup: (props,context) => {
         return () => (
-            <div>
-                <nav>
-                    <Navbar>
-                        {{
-                            tittle: () => context.slots.title?.(),
-                            icon: () => context.slots.icon?.(),
-                            default: () => context.slots.title?.(),
-                        }}
-                    </Navbar>
-                </nav>
+            <div class={s.wrapper}>
+                <Navbar class={s.navbar}>
+                    {{
+                        tittle: () => context.slots.title?.(),
+                        icon: () => context.slots.icon?.(),
+                        default: () => context.slots.title?.(),
+                    }}
+                </Navbar>
                 
                 {context.slots.default?.()}
                 
