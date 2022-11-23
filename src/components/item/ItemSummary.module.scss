@@ -1,0 +1,33 @@
+.total {
+    background-color: var(--total-bg);
+    margin: 16px;
+    border-radius: var(--input-radius);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    >li {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.list {
+    >li {
+        padding: 8px 16px;
+        display: flex;
+        height: 56px;
+        line-height: 40px;
+        .sign {
+            background-color: var(--sign-bg);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+        .tag {
+            margin-left: 16px;
+        }
+        .amount {
+            margin-left: auto;
+        }
+    }
+}
