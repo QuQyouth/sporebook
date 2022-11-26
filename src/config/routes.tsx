@@ -12,6 +12,7 @@ import { WelcomeForth } from "../components/welcome/WelcomeForth";
 import { WelcomeSecond } from "../components/welcome/WelcomeSecond";
 import { WelcomeThird } from "../components/welcome/WelcomeThird";
 import { ItemPage } from "../views/ItemPage";
+import { SignInPage } from "../views/SignInPage";
 import { StartPage } from "../views/StartPage";
 import { TagPage } from "../views/TagPage";
 import { Welcome } from "../views/Welcome";
@@ -43,5 +44,8 @@ export const routes: RouteRecordRaw[] = [
             {path: 'create', component: TagCreate},
             {path: ':id/edit', component: TagEdit}
         ]
+    },
+    {
+        path: '/sign_in', component: SignInPage
     }
 ]

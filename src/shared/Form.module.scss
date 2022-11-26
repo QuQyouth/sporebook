@@ -42,4 +42,12 @@
         color: var(--error-color);
         font-size: 12px;
     }
+    &.verificationCodeInput {
+        flex-grow: 0;
+        width: 8em;
+    }
+    &.verificationCodeButton {
+        flex: 1;
+        margin-left: 16px;
+    }
 }

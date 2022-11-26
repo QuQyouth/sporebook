@@ -3,6 +3,7 @@ import { computed, defineComponent, PropType, ref, VNode } from 'vue';
 import { EmojiSelect } from './EmojiSelect';
 import s from './Form.module.scss';
 import dayjs from 'dayjs';
+import { Button } from './Button';
 export const Form = defineComponent({
   props: {
     onSubmit: {
@@ -27,7 +28,7 @@ export const FormItem = defineComponent({
       type: [String, Number, Date]
     },
     type: {
-      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'select'>,
+      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'select' | 'verificationCode'>,
     },
     error: {
       type: String
@@ -69,6 +70,11 @@ export const FormItem = defineComponent({
                 }}
                 onCancel={() => refDateVisible.value = false} />
             </Popup></>
+        case 'verificationCode':
+          return <>
+            <input class={[s.formItem, s.input, s.verificationCodeInput]}/>
+            <Button class={[s.formItem, s.input, s.verificationCodeButton]}>提交</Button>
+          </>
         case undefined:
           return context.slots.default?.()
       }
