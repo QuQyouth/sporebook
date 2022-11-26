@@ -1,4 +1,5 @@
 :root {
+    --text: #333;
     --welcome-card-bg: #fff;
     --welcome-actions-text: #fff;
     --welcome-bg-start: #fff;
@@ -21,6 +22,8 @@
     --nav-text: #fff;
     --overlay-mask-bg: rgba(0, 0, 0, 0.5);
     --overlay-bg: #fff;
+    --overlay-user-text: #fff;
+    --overlay-user-bg: var(--welcome-bg-end);
     --top-safe-area-height: 24px;
     --tabs-indicator-bg: rgba(255, 255, 255, 0.5);
     --tag-bg: #eee;
