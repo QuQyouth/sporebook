@@ -3,7 +3,7 @@ import { Dialog } from "vant";
 import { defineComponent, reactive, ref, watchEffect } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Form, FormItem } from "../../shared/Form";
-import { Icon } from "../../shared/Icon";
+import { OverlayIcon } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
 import s from './ItemList.module.scss';
 import { ItemSummary } from "./ItemSummary";
@@ -46,7 +46,8 @@ export const ItemList = defineComponent({
             <MainLayout>
                 {{
                     title: '孢子记账',
-                    icon: () => <Icon name="menu" />,
+                    // icon: () => <Icon name="menu" />,
+                    icon: () => <OverlayIcon />,
                     default: () => (<>
                         <Tabs
                             v-model:selected={refSelected.value}
