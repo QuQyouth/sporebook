@@ -4,6 +4,7 @@ import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
 import { Icon } from "../shared/Icon";
 import { validate } from "../shared/validate";
+import logo from "../assets/icons/spore.png"
 import s from './SignInPage.module.scss';
 export const SignInPage = defineComponent({
     setup: (props,context) => {
@@ -35,10 +36,16 @@ export const SignInPage = defineComponent({
                     icon: () => <Icon name="doubleLeft" />,
                     default: () => (
                         <div class={s.wrapper}>
+                            <div class={s.logo}>
+                            <img src={logo} class={s.logo_img}/>
+                            </div>
                             <Form onSubmit={onSubmit}>
-                                <FormItem label="邮箱地址" type="text" v-model={formDate.email} error={errors.email?.[0] ?? '　'}/>
+                                <FormItem label="邮箱地址" type="text" 
+                                    v-model={formDate.email} 
+                                    error={errors.email?.[0] ?? '　'}
+                                />
                                 <FormItem label="验证码" type="verificationCode" v-model={formDate.code} error={errors.code?.[0] ?? '　'}/>
-                                <FormItem >
+                                <FormItem class={s.signInButton}>
                                     <Button>登录</Button>
                                 </FormItem>
                             </Form>

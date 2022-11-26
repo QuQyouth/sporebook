@@ -1,0 +1,12 @@
+.logo {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0 0;
+    &_img {
+        height: 64px;
+    }
+}
+
+.signInButton {
+    margin-top: 48px;
+}

@@ -43,6 +43,7 @@ export const FormItem = defineComponent({
         case 'text':
           return <input
             value={props.modelValue}
+            placeholder={props.placeholder}
             onInput={(e: any) => context.emit('update:modelValue', e.target.value)}
             class={[s.formItem, s.input]} />
         case 'emojiSelect':
@@ -73,7 +74,7 @@ export const FormItem = defineComponent({
         case 'verificationCode':
           return <>
             <input class={[s.formItem, s.input, s.verificationCodeInput]}/>
-            <Button class={[s.formItem, s.input, s.verificationCodeButton]}>提交</Button>
+            <Button class={[s.formItem, s.input, s.verificationCodeButton]}>发送验证码</Button>
           </>
         case undefined:
           return context.slots.default?.()
