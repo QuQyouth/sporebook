@@ -17,6 +17,7 @@
         display: flex;
         height: 56px;
         line-height: 40px;
+        border-bottom: 1px solid #ccc;
         .sign {
             background-color: var(--sign-bg);
             border-radius: 50%;
@@ -30,4 +31,8 @@
             margin-left: auto;
         }
     }
+}
+
+.overlay {
+    background-color: red;
 }

@@ -3,12 +3,14 @@ import s from './Tabs.module.scss';
 export const Tabs = defineComponent({
     props: {
         selected: {
-            type: String as PropType<string>
+            type: String as PropType<string>,
+            required: false
         },
         // onUpdateSelected: {
         //     type: Function as PropType<(name:string)=>void>
         // }
     },
+    emits: ['update:selected'], //notice
     setup: (props,context) => {
         return () => {
             const tabsArray = context.slots.default?.()
@@ -40,6 +42,10 @@ export const Tab = defineComponent({
     props:{
         name: {
             type: String as PropType<string>
+        },
+        value: {
+          type: String as PropType<string>,
+          required: true
         }
     },
     setup: (props,context) => {

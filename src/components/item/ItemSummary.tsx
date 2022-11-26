@@ -14,6 +14,8 @@ export const ItemSummary = defineComponent({
     setup: (props,context) => {
         return () => (
             <div class={s.wrapper}>
+                {props.startDate}
+                {props.endDate}
                 <ul class={s.total}>
                     <li><span>收入</span><span>100</span></li>
                     <li><span>支出</span><span>100</span></li>

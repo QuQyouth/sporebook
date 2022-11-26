@@ -1,8 +1,8 @@
-import dayjs from 'dayjs';
 import { DatetimePicker, Popup } from 'vant';
 import { computed, defineComponent, PropType, ref, VNode } from 'vue';
 import { EmojiSelect } from './EmojiSelect';
 import s from './Form.module.scss';
+import dayjs from 'dayjs';
 export const Form = defineComponent({
   props: {
     onSubmit: {
@@ -24,15 +24,17 @@ export const FormItem = defineComponent({
       type: String
     },
     modelValue: {
-      type: [String, Number]
+      type: [String, Number, Date]
     },
     type: {
-      type: String as PropType<'text' | 'emojiSelect' | 'date'>,
+      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'select'>,
     },
     error: {
       type: String
-    }
+    },
+    placeholder: String,
   },
+  emits:['update:modelValue'], //notice
   setup: (props, context) => {
     const refDateVisible = ref(false)
     const content = computed(() => {
@@ -49,13 +51,20 @@ export const FormItem = defineComponent({
             class={[s.formItem, s.emojiList, s.error]} />
         case 'date':
           return <>
-            <input readonly={true} value={props.modelValue}
+            <input 
+              readonly={true} 
+              placeholder={props.placeholder}
+              value={props.modelValue}
               onClick={() => { refDateVisible.value = true }}
-              class={[s.formItem, s.input]} />
+              class={[s.formItem, s.input]} 
+            />
             <Popup position='bottom' v-model:show={refDateVisible.value}>
-              <DatetimePicker value={props.modelValue} type="date" title="选择年月日"
+              <DatetimePicker
+                modelValue={props.modelValue ? new Date(props.modelValue) : new Date()} 
+                type="date" 
+                title="选择年月日"
                 onConfirm={(date: Date) => {
-                  context.emit('update:modelValue', dayjs().format())
+                  context.emit('update:modelValue', dayjs(date).format('YYYY-MM-DD'))
                   refDateVisible.value = false
                 }}
                 onCancel={() => refDateVisible.value = false} />
