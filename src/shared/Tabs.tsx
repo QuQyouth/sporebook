@@ -45,7 +45,7 @@ export const Tab = defineComponent({
         },
         value: {
           type: String as PropType<string>,
-          required: true
+        //   required: true
         }
     },
     setup: (props,context) => {
