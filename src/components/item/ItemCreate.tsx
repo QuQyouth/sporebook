@@ -31,8 +31,13 @@ export const ItemCreate = defineComponent({
                     title: () => '记一笔',
                     icon: () => <Icon name="doubleLeft"/>,
                     default: () => <>
-                        {/* <Tabs selected = {refKind.value} onUpdateSelected={name => refKind.value = name}> */}
-                        <Tabs v-model:selected={refKind.value}>
+                        <Tabs 
+                            v-model:selected={refKind.value}
+                            //相当于
+                            // selected={refKind.value}
+                            // onUpdate:selected={name=>refKind.value = name}
+                        >
+                            {/* <Tab name="支出" class={s.tags_wrapper}> */}
                             <Tab name="支出" class={s.tags_wrapper}>
                                 {refExpensesTags.value.map((tag) => {
                                     return <div class={s.tag}>
