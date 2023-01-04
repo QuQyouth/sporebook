@@ -34,6 +34,7 @@ export const FormItem = defineComponent({
       type: String
     },
     placeholder: String,
+    onClick: Function as PropType<() => void>
   },
   emits:['update:modelValue'], //notice
   setup: (props, context) => {
@@ -74,7 +75,7 @@ export const FormItem = defineComponent({
         case 'verificationCode':
           return <>
             <input class={[s.formItem, s.input, s.verificationCodeInput]}/>
-            <Button class={[s.formItem, s.input, s.verificationCodeButton]}>发送验证码</Button>
+            <Button onClick={props.onClick} class={[s.formItem, s.input, s.verificationCodeButton]}>发送验证码</Button>
           </>
         case undefined:
           return context.slots.default?.()

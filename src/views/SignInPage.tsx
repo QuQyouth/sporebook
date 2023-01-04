@@ -6,6 +6,7 @@ import { Icon } from "../shared/Icon";
 import { validate } from "../shared/validate";
 import logo from "../assets/icons/spore.png"
 import s from './SignInPage.module.scss';
+import axios from "axios";
 export const SignInPage = defineComponent({
     setup: (props,context) => {
         const formDate = reactive({
@@ -29,6 +30,13 @@ export const SignInPage = defineComponent({
             ]))
             
         }
+        const onClickSendValidationCode =  async () => {
+            console.log(111);
+            
+            const response = await axios.post('/api/v1/validation_codes', {email: formDate.email})
+            console.log(response);
+            
+        }
         return () => (
             <MainLayout>
                 {{
@@ -44,7 +52,9 @@ export const SignInPage = defineComponent({
                                     v-model={formDate.email} 
                                     error={errors.email?.[0] ?? '　'}
                                 />
-                                <FormItem label="验证码" type="verificationCode" v-model={formDate.code} error={errors.code?.[0] ?? '　'}/>
+                                <FormItem label="验证码" type="verificationCode" 
+                                onClick={onClickSendValidationCode}
+                                v-model={formDate.code} error={errors.code?.[0] ?? '　'}/>
                                 <FormItem class={s.signInButton}>
                                     <Button>登录</Button>
                                 </FormItem>
