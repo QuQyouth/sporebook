@@ -4,6 +4,7 @@ import s from "./Welcome.module.scss";
 import logo from "../assets/icons/spore.png";
 import { useSwipe } from "../hooks/useSwipe";
 import { throttle } from "../shared/throttle";
+import { Icon } from "../shared/Icon";
 
 // Record 将一个类型的所有属性值都映射到另一个类型上并创造一个新的类型
 const pushRouterMap: Record<string,string> = {
@@ -33,7 +34,8 @@ export const Welcome = defineComponent({
         return () => (
             <div class={s.wrapper}>
                 <header>
-                    <img src={logo} class={s.logo}/>
+                    {/* <img src={logo} class={s.logo}/> */}
+                    <Icon name="logo" class={s.logo} />
                     <h1>孢子记账</h1>
                 </header>
                 <main ref={main}>

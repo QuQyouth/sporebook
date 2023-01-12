@@ -1,9 +1,10 @@
-.logo {
+.logoWrapper {
     display: flex;
     justify-content: center;
     padding: 24px 0 0;
-    &_img {
-        height: 64px;
+    .logo {
+        width: 10.2em;
+        height: 4.2em;
     }
 }
 

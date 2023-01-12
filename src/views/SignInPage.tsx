@@ -44,8 +44,9 @@ export const SignInPage = defineComponent({
                     icon: () => <Icon name="doubleLeft" />,
                     default: () => (
                         <div class={s.wrapper}>
-                            <div class={s.logo}>
-                            <img src={logo} class={s.logo_img}/>
+                            <div class={s.logoWrapper}>
+                            {/* <img src={logo} class={s.logo_img}/> */}
+                            <Icon name="logo" class={s.logo} />
                             </div>
                             <Form onSubmit={onSubmit}>
                                 <FormItem label="邮箱地址" type="text" 
