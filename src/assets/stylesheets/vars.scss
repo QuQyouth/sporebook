@@ -2,15 +2,15 @@
     --text: #333;
     --welcome-card-bg: #fff;
     --welcome-actions-text: #fff;
-    --welcome-bg-start: #fff;
-    --welcome-bg-end: #00796B;
+    --welcome-bg-start: #96c9a5;
+    --welcome-bg-end: #517b5f;
     --welcome-nav-height: 64px;
     --welcome-nav-gap: 8px;
     --z-index-bottom-nav: 8;
     --z-index-nav-overlay: 16;
     --z-index-navbar: 32;
     --transition-duration: 0.5s;
-    --button-bg: #485b4d;
+    --button-bg: #405449;
     --button-bg-danger: #c51244;
     --button-text: #fff;
     --button-font-size: 18px;
@@ -18,8 +18,8 @@
     --button-height: 48px;
     --float-button-text: #fff;
     --float-button-bg: var(--button-bg);
-    --nav-bg-start: var(--welcome-bg-start);
-    --nav-bg-end: var(--welcome-bg-end);
+    --nav-bg-start: var(--welcome-bg-end);
+    --nav-bg-end: var(--button-bg);
     --nav-text: #fff;
     --overlay-mask-bg: rgba(0, 0, 0, 0.5);
     --overlay-bg: #fff;
@@ -38,6 +38,7 @@
     --input-radius: 8px;
     --input-shadow: #ccc;
     --error-color: #c51244;
-    --total-bg: #ccc;
-    --sign-bg: #ccc
+    --total-bg: #b7aebd;
+    --total-text: var(--button-bg);
+    --sign-bg: var(--total-bg)
 }

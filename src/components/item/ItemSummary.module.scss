@@ -5,6 +5,7 @@
     display: flex;
     justify-content: space-around;
     padding: 8px 0;
+    color: var(--total-text);
     >li {
         display: flex;
         flex-direction: column;
@@ -17,7 +18,8 @@
         display: flex;
         height: 56px;
         line-height: 40px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid #75738f;
+        color: var(--total-text);
         .sign {
             background-color: var(--sign-bg);
             border-radius: 50%;
@@ -26,13 +28,10 @@
         }
         .tag {
             margin-left: 16px;
+            color: var(--total-text);
         }
         .amount {
             margin-left: auto;
         }
     }
-}
-
-.overlay {
-    background-color: red;
 }
