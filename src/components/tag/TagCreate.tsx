@@ -1,5 +1,6 @@
 import { defineComponent, PropType} from 'vue';
 import { MainLayout } from '../../layouts/MainLayout';
+import { BackIcon } from '../../shared/BackIcon';
 import { Icon } from '../../shared/Icon';
 import s from './TagCreate.module.scss';
 import { TagForm } from './TagForm';
@@ -13,7 +14,7 @@ export const TagCreate = defineComponent({
     return () => (
       <MainLayout>{{
         title: () => '新建标签',
-        icon: () => <Icon name="doubleLeft" onClick={() => { }} />,
+        icon: () => <BackIcon />,
         default: () => (
           <TagForm />
         )

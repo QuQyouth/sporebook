@@ -1,4 +1,5 @@
 import { defineComponent, PropType, ref } from "vue";
+import { RouterLink } from "vue-router";
 import { Icon } from "../shared/Icon";
 import s from './Overlay.module.scss';
 
@@ -17,8 +18,10 @@ export const Overlay = defineComponent({
                 <div class={s.mask} onClick={closeOverlay}>
                     <div class={s.overlay}>
                         <section class={s.currentUser}>
-                            <h2>未登录用户</h2>
-                            <p>点击这里登录</p>
+                            <RouterLink to={`/sign_in`}>
+                                <h2>未登录用户</h2>
+                                <p>点击这里登录</p>
+                            </RouterLink>
                         </section>
                         <nav class={s.action}>
                             <ul class={s.action_list}>

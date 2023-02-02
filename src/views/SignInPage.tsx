@@ -7,6 +7,7 @@ import { validate } from "../shared/validate";
 import logo from "../assets/icons/spore.png"
 import s from './SignInPage.module.scss';
 import axios from "axios";
+import { BackIcon } from "../shared/BackIcon";
 export const SignInPage = defineComponent({
     setup: (props,context) => {
         const formDate = reactive({
@@ -41,7 +42,7 @@ export const SignInPage = defineComponent({
             <MainLayout>
                 {{
                     title: () => '登录',
-                    icon: () => <Icon name="doubleLeft" />,
+                    icon: () => <BackIcon />,
                     default: () => (
                         <div class={s.wrapper}>
                             <div class={s.logoWrapper}>
