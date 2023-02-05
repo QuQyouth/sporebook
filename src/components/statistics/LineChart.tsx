@@ -1,11 +1,24 @@
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, PropType, ref } from "vue";
 import s from './LineChart.module.scss';
 import * as echarts from 'echarts'
+import { ItemData } from "./ItemDate";
 export const LineChart = defineComponent({
     setup: (props,context) => {
+        
         const refLineChart = ref<HTMLDivElement>() 
         onMounted(() => {
             if(refLineChart.value === undefined) { return }
+            const sortDateTime = (a:string,b:string) =>{
+              return Date.parse(a) - Date.parse(b)
+            }
+
+            const refMonths = ItemData.map((item)=>{
+              return Object.assign({},{'time': item.time})
+            })
+            console.log(refMonths);
+            
+
+
             var myLineChart = echarts.init(refLineChart.value)
             const option = {
                 xAxis: {

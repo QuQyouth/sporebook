@@ -26,12 +26,11 @@ export const Overlay = defineComponent({
                         <nav class={s.action}>
                             <ul class={s.action_list}>
                                 <li class={s.action_Item}>
-                                    <Icon name="chart" class={s.icon}/>
-                                    统计图表
-                                </li>
-                                <li class={s.action_Item}>
-                                    <Icon name="chart" class={s.icon}/>
-                                    导出数据
+                                    <RouterLink to="/statistics">
+                                        <Icon name="chart" class={s.icon}/>
+                                        统计图表
+                                    </RouterLink>
+                                    
                                 </li>
                             </ul>
                         </nav>

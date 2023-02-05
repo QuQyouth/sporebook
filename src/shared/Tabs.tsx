@@ -40,6 +40,10 @@ export const Tabs = defineComponent({
 
 export const Tab = defineComponent({
     props:{
+        kind: {
+            type: String as PropType<string>,
+            required: true,
+        },
         name: {
             type: String as PropType<string>
         },

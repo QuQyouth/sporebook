@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "../../shared/Tabs";
-import { defineComponent, onMounted, PropType, ref } from "vue";
+import { computed, defineComponent, onMounted, PropType, ref } from "vue";
 import s from './Charts.module.scss';
 
 import { LineChart } from "./LineChart";
@@ -28,8 +28,8 @@ export const Charts = defineComponent({
                     <Tabs
                         v-model:selected={refSelected.value}
                     >
-                        <Tab name="支出" value="支出"></Tab>
-                        <Tab name="收入" value="收入"></Tab>
+                        <Tab name="支出" value="支出" kind="expenditure"></Tab>
+                        <Tab name="收入" value="收入" kind="income"></Tab>
                     </Tabs>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { ComputedRef, defineComponent, reactive, ref } from "vue";
+import { ComputedRef, defineComponent, PropType, reactive, ref } from "vue";
 import { Icon } from "../../shared/Icon";
 import s from './InputPad.module.scss';
 import { DatetimePicker, Popup } from 'vant';
@@ -8,11 +8,19 @@ export const InputPad = defineComponent({
     // components: {
     //     [DatetimePicker.name]: DatetimePicker,
     // },
+    props: {
+        time: String,
+        amount: Number,
+        tagId: String,
+        kind: String,
+        onSubmit: {
+          type: Function as PropType<() => void>
+        }
+      },
     setup: (props,context) => {
         const refShowPop = ref(false)
         const refCurrentDate = ref<Date>(new Date())
-        const refAmount = ref('0') //当前未输入完的数据
-        // const refAmountList = reactive<number[]>([]) //<number[]>添加泛型
+        const refAmount = ref(props.amount?.toString() || "0") //当前未输入完的数据
         const refNumberList = reactive({pre:'',cur:'0'})
         const buttons = [
             {text: '1', onClick: ()=>{appendText(1)}},
@@ -29,13 +37,22 @@ export const InputPad = defineComponent({
             {text: '-', onClick: ()=>{addOrSubtract('-')}},
             {text: '.', onClick: ()=>{appendText('.')}},
             {text: '0', onClick: ()=>{appendText(0)}},
-            {text: '清空', onClick: ()=>{operationEmpty()}},
+            // {text: '清空', onClick: ()=>{operationEmpty}},
             {text: '=', onClick: ()=>{performOperation('=')}},
+            {
+                text: '完成', onClick: ()=>{
+                    context.emit('update:amount', refNumberList.pre + refNumberList.cur)
+                    props.onSubmit?.()
+                    
+                }
+            },
         ]
-        const operationEmpty = () => {
-            refNumberList.pre = ''
-            refNumberList.cur = '0'
-        }
+
+
+        // const operationEmpty = () => {
+        //     refNumberList.pre = ''
+        //     refNumberList.cur = '0'
+        // }
         const performOperation = (e: "=") => {
             refNumberList.pre += refNumberList.cur
             refNumberList.cur = ''
@@ -113,7 +130,11 @@ export const InputPad = defineComponent({
         }
         const hideDatePicker = () => refShowPop.value = false
         const showDatePicker = () => refShowPop.value = true
-        const setDate = (date: Date) => {refCurrentDate.value = date; hideDatePicker()}
+        const setDate = (date: Date) => {
+            refCurrentDate.value = date; 
+            context.emit('update:time', date.toISOString())
+            hideDatePicker()
+        }
         return () => <>
             <div>
                 <div class={s.padNav}>
