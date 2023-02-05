@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import axios from "axios";
 import { Dialog } from "vant";
 import { defineComponent, onMounted, reactive, ref } from "vue";
@@ -72,7 +73,7 @@ export const ItemCreate = defineComponent({
             formDateSubmit.tag.tagId = tag.tagId
             
         }
-          
+        
         const timer = ref<number>()
         const currentTag = ref<HTMLDivElement>()
 
@@ -83,7 +84,8 @@ export const ItemCreate = defineComponent({
         }
         const onTouchStart = (e: TouchEvent, tag: Tag ) => {
             currentTag.value = e.currentTarget as HTMLDivElement
-            timer.value = setTimeout(()=>{
+            // 在Node.js中setTimeout()返回的是一个Timer对象而不是一个数字类型的id
+            timer.value = window.setTimeout(()=>{
               onLongPress(tag.tagId)
             }, 500)
         }
