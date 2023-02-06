@@ -6,3 +6,17 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+type Tag = {
+  id: string;
+  name: string;
+  sign: string;
+  kind: 'expenditure' | 'income';
+};
+type ItemList = {
+  id: string;
+  amount: number;
+  tag?: Tag,
+  time: string;
+  kind: 'expenditure' | 'income';
+}[];
