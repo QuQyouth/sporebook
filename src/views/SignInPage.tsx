@@ -4,10 +4,10 @@ import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
 import { Icon } from "../shared/Icon";
 import { validate } from "../shared/validate";
-import logo from "../assets/icons/spore.png"
 import s from './SignInPage.module.scss';
-import axios from "axios";
 import { BackIcon } from "../shared/BackIcon";
+import { defaultHttpClient } from "../shared/HttpClient";
+
 export const SignInPage = defineComponent({
     setup: (props,context) => {
         const formDate = reactive({
@@ -18,7 +18,14 @@ export const SignInPage = defineComponent({
             email: [],
             code: []
         })
-        const onSubmit = (e: Event) => {
+        const onError = (error: any) => {
+            if (error.response.status === 422) {
+              Object.assign(errors, error.response.data.errors)
+            }
+            throw error
+          }
+        const onSubmit = async (e: Event) => {
+            console.log('submit')
             e.preventDefault()
             Object.assign(errors, {
                 email: [],
@@ -29,13 +36,19 @@ export const SignInPage = defineComponent({
                 {key: 'email', type: 'pattern', regex: /.+@.+/, message: '请输入正确的邮箱格式'},
                 {key: 'code', type: 'required', message: '必填'}
             ]))
+            await defaultHttpClient.post('/session', formDate).then((res) => {
+                console.log(res)
+            }).catch((err)=>{
+                console.log(err)
+            })
+            
             
         }
         const onClickSendValidationCode =  async () => {
             console.log(111);
             
-            const response = await axios.post('/api/v1/validation_codes', {email: formDate.email})
-            console.log(response);
+            await defaultHttpClient.post('/validation_codes', {email: formDate.email}).catch(onError)
+            
             
         }
         return () => (
@@ -58,7 +71,7 @@ export const SignInPage = defineComponent({
                                 onClick={onClickSendValidationCode}
                                 v-model={formDate.code} error={errors.code?.[0] ?? '　'}/>
                                 <FormItem class={s.signInButton}>
-                                    <Button>登录</Button>
+                                    <Button type="submit">登录</Button>
                                 </FormItem>
                             </Form>
                         </div>

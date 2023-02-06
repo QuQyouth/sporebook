@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { viteMockServe} from 'vite-plugin-mock'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 // @ts-nocheck
@@ -26,8 +27,12 @@ export default defineConfig({
           esModule: true,
           resolveStyle: (name) => `vant/es/${name}/style/index`
         },
-      ],
+      ]
     }),
+    viteMockServe({
+      mockPath: "./src/mock/data",
+      localEnabled: true // 是否开启开发环境
+    })
   ],
   server: {
     proxy: {
