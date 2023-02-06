@@ -4,6 +4,7 @@ import { EmojiSelect } from './EmojiSelect';
 import s from './Form.module.scss';
 import dayjs from 'dayjs';
 import { Button } from './Button';
+import { GetFriendlyError } from './GetFriendlyError';
 export const Form = defineComponent({
   props: {
     onSubmit: {
@@ -74,7 +75,10 @@ export const FormItem = defineComponent({
             </Popup></>
         case 'verificationCode':
           return <>
-            <input class={[s.formItem, s.input, s.verificationCodeInput]}/>
+            <input class={[s.formItem, s.input, s.verificationCodeInput]}
+              value={props.modelValue}
+              onInput={(e: any) => context.emit('update:modelValue', e.target.value)}
+            />
             <Button onClick={props.onClick} class={[s.formItem, s.input, s.verificationCodeButton]}>发送验证码</Button>
           </>
         case undefined:
@@ -92,7 +96,7 @@ export const FormItem = defineComponent({
           </div>
           {props.error &&
             <div class={s.formItem_errorHint}>
-              <span>{props.error}</span>
+              <span>{props.error ? GetFriendlyError(props.error) : '　'}</span>
             </div>
           }
         </label>
