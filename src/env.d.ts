@@ -7,6 +7,16 @@ declare module '*.vue' {
   export default component
 }
 
+type UserFormData = {
+  email: string,
+  code: string
+}
+
+type User = {
+  id: string;
+  email: string;
+}
+
 type Tag = {
   id: string;
   name: string;

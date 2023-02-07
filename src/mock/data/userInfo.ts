@@ -47,7 +47,10 @@ export default {
     // 登录
     session: () => {
         return {
-            message: 'success'
+            id: Random.id(),
+            email: Random.email(),
+            token: Random.word(),
+            codeSign: 0,
         }
     },
     // 查
