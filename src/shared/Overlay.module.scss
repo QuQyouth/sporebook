@@ -8,6 +8,12 @@
     background: var(--overlay-mask-bg);
 }
 
+.email {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .overlay {
     width: 16em;
     height: calc(100% - var(--top-safe-area-height));
