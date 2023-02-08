@@ -8,8 +8,12 @@ import UserInfo from './data/userInfo'
 // 登录
 Mock.mock('/api/v1/session', 'post', UserInfo.session )
 
-Mock.mock('/api/v1/getUserInfoList', 'get' ,UserInfo.getList); // 查
-Mock.mock('/userInfo/create', 'post' ,UserInfo.create); // 增
+Mock.mock('/api/v1/getTagsList', 'get' ,UserInfo.getTagsList)
+Mock.mock('/api/v1/getItemList', 'get' ,UserInfo.getItemList)
+
+Mock.mock('/api/v1/getUserInfoList', 'get' ,UserInfo.getList); 
+Mock.mock('/api/v1/tagCreate', 'post' ,UserInfo.create); 
+Mock.mock('/api/v1/ItemCreate', 'post' ,UserInfo.create); 
 
 
 export default Mock

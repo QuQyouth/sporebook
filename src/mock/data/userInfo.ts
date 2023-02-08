@@ -1,8 +1,8 @@
 import Mock, { Random } from 'mockjs';
 import {MockMethod} from 'vite-plugin-mock'
 const list:any = [];
-const tagList:any = []
-const ItemList: ItemList = []
+const tagsList:any = []
+const ItemList:any = []
 for (let i = 0; i < 20; i++) {
     list.push({
         uerId: Random.id(),
@@ -27,20 +27,28 @@ for (let i = 0; i < 20; i++) {
             time: Random.datetime()
         }]
     })
+
 }
+
+for (let i = 0; i < 10; i++) {
+    tagsList.push({
+        id: Random.id(),
+        kind: Mock.mock(/expenditure|income/),
+        sign: Random.image(),
+        name: Mock.mock(/吃饭|购物|交通|住房/),
+    })
+    
+}
+
+
+// ItemsList
 for (let i = 0; i < 20; i++) {
     ItemList.push({
         id: Random.id(),
-        kind: Mock.mock({'regexp':/expenditure|income/}),
-        tag: {
-            id: Random.id(),
-            kind: Mock.mock({'regexp':/expenditure|income/}),
-            sign: Random.image(),
-            name: Random.cword(1,3)
-        },
-        amount: Random.natural(1,500),
+        kind: Mock.mock(/expenditure|income/),
+        name: Mock.mock(/吃饭|购物|交通|住房/),
+        amount: Random.natural(1,500).toString(),
         time: Random.datetime()
-        
     })
 }
 export default {
@@ -60,11 +68,17 @@ export default {
            list: list
         }
     },
+    getTagsList:()=>{
+        return {
+            total: tagsList.length,
+            tagsList: tagsList
+        }
+    },
     getItemList:() => {
-        return [200, {
+        return {
             total: ItemList.length,
             ItemList: ItemList
-        }]
+        }
     },
     // 增
     create: () => ({

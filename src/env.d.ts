@@ -21,12 +21,37 @@ type Tag = {
   id: string;
   name: string;
   sign: string;
-  kind: 'expenditure' | 'income';
+  kind: 'expenditure' | 'income'
 };
+
+type TagsList = {
+  id: string;
+  name: string;
+  sign: string;
+  kind: 'expenditure' | 'income';
+}[]
+
 type ItemList = {
   id: string;
   amount: number;
   tag?: Tag,
   time: string;
-  kind: 'expenditure' | 'income';
+  kind: 'expenditure' | 'income'
 }[];
+
+
+type Item = {
+  id: string;
+  amount: number;
+  tag?: Tag,
+  time: string;
+  kind: 'expenditure' | 'income'
+};
+
+type ItemFormDate = {
+  id: string;
+  name: string;
+  amount: string;
+  time: string;
+  kind: string
+}
