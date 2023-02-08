@@ -96,7 +96,7 @@ export const FormItem = defineComponent({
           </div>
           {props.error &&
             <div class={s.formItem_errorHint}>
-              <span>{props.error ? GetFriendlyError(props.error) : '　'}</span>
+              <span>{props.error || '　'}</span>
             </div>
           }
         </label>

@@ -11,48 +11,39 @@ import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
 import s from './ItemCreate.module.scss';
-import { Tags } from "./Tags";
 
 export const ItemCreate = defineComponent({
     setup: (props,context) => {
         
-        const userInfo = reactive({})
         const refKind = ref('支出')
         const router = useRouter()
-        const route = useRoute()
-        const formDateSubmit = reactive<Item>({
+        const refSelectedTagId = ref('')
+        const formDateSubmit = reactive<ItemFormDate>({
             id: '',
-            kind: {regexp: 'expenditure'},
-            tag: {
-                id:'',
-                kind: {regexp: 'expenditure'},
-                sign: '',
-                name: ''
-            },
-            amount: 0,
+            name: '',
+            kind: 'expenditure',
+            // tagId: refSelectedTagId.value,
+            amount: '',
             time: ''
         })
         const onError = () => {
             Dialog.alert({ title: '提示', message: '创建失败' })
           }
         const onSubmit = async () => {
-            const response = await axios.post('https://mock.apifox.cn/m1/2233710-0-default/user/item', formDateSubmit).catch(onError)
-            Object.assign(userInfo, response)
+            await defaultHttpClient.post('/ItemCreate', formDateSubmit).catch(onError)
             router.push('/items')
             
         }
 
         const onSelect = (tag:Tag) => {
-            context.emit('update:seletedTagId', tag.id)
+            refSelectedTagId.value = tag.id
         }
         
         const timer = ref<number>()
         const currentTag = ref<HTMLDivElement>()
 
         const onLongPress = (id: Tag['id'])=>{
-            router.push(`/tags/${id}/edit?kind=${formDateSubmit.kind.regexp}`)
-            console.log(id);
-            
+            router.push(`/tags/${id}/edit?kind=${formDateSubmit.kind}`)
         }
         const onTouchStart = (e: TouchEvent, tag: Tag ) => {
             currentTag.value = e.currentTarget as HTMLDivElement
@@ -86,16 +77,11 @@ export const ItemCreate = defineComponent({
                     default: () => <>
                         <Tabs 
                             v-model:selected = {refKind.value}
-                            //相当于
-                            // selected={refKind.value}
-                            // onUpdate:selected={name=>refKind.value = name}
                         >
-                            {/* <Tab name="支出" class={s.tags_wrapper}> */}
                             <Tab name="支出" class={s.tags_wrapper} 
                             value="expenditure">
-                                {/* <Tags kind="expenditure" v-model:selectedTagId={formDateSubmit.tag?.id} tagsList={tagsList.value}/> */}
                                 {tagsList.value.map((tag) => {
-                                    return <div class={[s.tag, formDateSubmit.tag?.id === tag.id ? s.selected : '']}
+                                    return <div class={[s.tag, refSelectedTagId.value === tag.id ? s.selected : '']}
                                                 onClick={()=> onSelect(tag)}
                                                 onTouchmove={onTouchMove} 
                                                 onTouchstart={(e)=>onTouchStart(e, tag)}
@@ -120,7 +106,7 @@ export const ItemCreate = defineComponent({
                             <Tab name="收入" class={s.tags_wrapper} value="income">
                                 
                             {tagsList.value.map((tag) => {
-                                    return <div class={[s.tag, formDateSubmit.tag?.id === tag.id ? s.selected : '']}
+                                    return <div class={[s.tag, refSelectedTagId.value === tag.id ? s.selected : '']}
                                                 onTouchmove={onTouchMove}
                                                 onClick={()=> onSelect(tag)}
                                                 onTouchstart={(e)=>onTouchStart(e, tag)}

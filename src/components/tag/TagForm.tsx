@@ -3,6 +3,7 @@ import { useRoute, useRouter } from "vue-router";
 import { Button } from "../../shared/Button";
 import { EmojiSelect } from "../../shared/EmojiSelect";
 import { Form, FormItem } from "../../shared/Form";
+import { defaultHttpClient } from "../../shared/HttpClient";
 import { Rules, validate } from "../../shared/validate";
 import s from './TagForm.module.scss'; 
 export const TagForm = defineComponent({
@@ -19,7 +20,7 @@ export const TagForm = defineComponent({
       sign: "",
     })
     const errors = reactive<{[k in keyof typeof formData]?: string[]}>({})
-    const onSubmit = (e: Event)=>{
+    const onSubmit = async (e: Event)=>{
       e.preventDefault()
       console.log(toRaw(formData)); //拿到原始值
       const rules : Rules<typeof formData> = [
@@ -33,8 +34,8 @@ export const TagForm = defineComponent({
       })
       Object.assign(errors, validate(formData, rules))
       console.log(formData);
-      debugger
-      router.push({path: '/items/create', query: formData})
+      await defaultHttpClient.post('/tagCreate',formData)
+      router.push({path: '/items/create'})
       
     }
     return () => (
