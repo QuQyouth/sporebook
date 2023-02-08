@@ -1,8 +1,6 @@
 
 
-export const DivideGroup = (sortData: ItemFormDate[]) => {
-  console.log(11111111111)
-  console.log(sortData)
+export const DivideGroup = (sortData: ItemFormDate[], attribute: keyof ItemFormDate) => {
   const groupBy = (array: ItemFormDate[], f: Function) => {
     const groups: {
       [key: string]: ItemFormDate[],
@@ -17,7 +15,7 @@ export const DivideGroup = (sortData: ItemFormDate[]) => {
     });
   };
   const sorted = groupBy(sortData, (item: ItemFormDate) => {
-    return item.kind;
+    return item[attribute];
   });
   return sorted;
 };
