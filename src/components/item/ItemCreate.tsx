@@ -5,88 +5,60 @@ import { defineComponent, onMounted, reactive, ref } from "vue";
 import { RouterLink, useRoute, useRouter } from "vue-router";
 import { MainLayout } from "../../layouts/MainLayout";
 import { BackIcon } from "../../shared/BackIcon";
+import { DivideGroup } from "../../shared/DivideGroup";
+import { defaultHttpClient } from "../../shared/HttpClient";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
 import s from './ItemCreate.module.scss';
+import { Tags } from "./Tags";
 
 export const ItemCreate = defineComponent({
     setup: (props,context) => {
-        /**
-        * ApifoxModel
-        */
-        interface ApifoxModel {
-            amount: number;
-            ItemId: string;
-            kind: string;
-            tag: Tag;
-            time: string;
-        }
         
-        interface Tag {
-            name: string;
-            sign: string;
-            tagId: string;
-            kind: string;
-        }
-        const userIfo = reactive({})
+        const userInfo = reactive({})
         const refKind = ref('支出')
-        // 假定删选后的支出或收入tags数据
-        const refExpensesTags = reactive([
-            {tagId: '1', kind: 'expenditure' ,name: '吃', sign: '￥'},
-            {tagId: '2', kind: 'expenditure' ,name: '吃', sign: '￥'},
-            {tagId: '3', kind: 'expenditure' ,name: '吃', sign: '￥'},
-            {tagId: '4', kind: 'expenditure' ,name: '吃', sign: '￥'},
-        ])
-        const refIncomeTags = reactive([
-            {tagId: '5', kind: 'income', name: '工资', sign: '￥'},
-            {tagId: '6', kind: 'income', name: '工资', sign: '￥'},
-            {tagId: '7', kind: 'income', name: '工资', sign: '￥'},
-        ])
-
         const router = useRouter()
         const route = useRoute()
-        
-        const formDateSubmit:ApifoxModel = reactive({            
-            ItemId: '',
-            kind: '支出',
+        const formDateSubmit = reactive<Item>({
+            id: '',
+            kind: {regexp: 'expenditure'},
             tag: {
-                tagId: "",
-                sign: "",
-                name: "",
-                kind: ""
+                id:'',
+                kind: {regexp: 'expenditure'},
+                sign: '',
+                name: ''
             },
             amount: 0,
-            time: ""
+            time: ''
         })
         const onError = () => {
             Dialog.alert({ title: '提示', message: '创建失败' })
           }
         const onSubmit = async () => {
             const response = await axios.post('https://mock.apifox.cn/m1/2233710-0-default/user/item', formDateSubmit).catch(onError)
-            Object.assign(userIfo, response)
+            Object.assign(userInfo, response)
             router.push('/items')
             
         }
 
         const onSelect = (tag:Tag) => {
-            formDateSubmit.tag.tagId = tag.tagId
-            
+            context.emit('update:seletedTagId', tag.id)
         }
         
         const timer = ref<number>()
         const currentTag = ref<HTMLDivElement>()
 
-        const onLongPress = (tagId: Tag['tagId'])=>{
-            router.push(`/tags/${tagId}/edit?kind=${formDateSubmit.kind}`)
-            console.log(tagId);
+        const onLongPress = (id: Tag['id'])=>{
+            router.push(`/tags/${id}/edit?kind=${formDateSubmit.kind.regexp}`)
+            console.log(id);
             
         }
         const onTouchStart = (e: TouchEvent, tag: Tag ) => {
             currentTag.value = e.currentTarget as HTMLDivElement
             // 在Node.js中setTimeout()返回的是一个Timer对象而不是一个数字类型的id
             timer.value = window.setTimeout(()=>{
-              onLongPress(tag.tagId)
+              onLongPress(tag.id)
             }, 500)
         }
         const onTouchEnd = (e: TouchEvent) => {
@@ -98,21 +70,14 @@ export const ItemCreate = defineComponent({
               currentTag.value?.contains(pointedElement) === false){
               clearTimeout(timer.value)
             }
-          }
-        onMounted(async ()=>{
-            const response = await axios.post('https://mock.apifox.cn/m1/2233710-0-default/user/1', "1")
-            
-            if (route.query.sign) {
-                let currentTag = {
-                    tagId: route.query.tagId!.toString(),
-                    kind: route.query.kind!.toString(), 
-                    sign: route.query.sign!.toString(), 
-                    name: route.query.name!.toString(),
-                }
-                route.query.kind === 'expenditure' ? refExpensesTags.unshift(currentTag) : refIncomeTags.unshift(currentTag)
-                
-            }
-        })
+        }
+        
+        const tagsList = ref<Tag[]>([])
+        
+        onMounted(async () => {
+            const result:any = await defaultHttpClient.get("/getTagsList")
+            tagsList.value = result.data.tagsList
+        });
         return () => (
             <MainLayout>
                 {{
@@ -120,16 +85,17 @@ export const ItemCreate = defineComponent({
                     icon: () => <BackIcon/>,
                     default: () => <>
                         <Tabs 
-                            v-model:selected={formDateSubmit.kind}
+                            v-model:selected = {refKind.value}
                             //相当于
                             // selected={refKind.value}
                             // onUpdate:selected={name=>refKind.value = name}
                         >
                             {/* <Tab name="支出" class={s.tags_wrapper}> */}
                             <Tab name="支出" class={s.tags_wrapper} 
-                            kind="expenditure">
-                                {refExpensesTags.map((tag) => {
-                                    return <div class={[s.tag, formDateSubmit.tag.tagId === tag.tagId ? s.selected : '']}
+                            value="expenditure">
+                                {/* <Tags kind="expenditure" v-model:selectedTagId={formDateSubmit.tag?.id} tagsList={tagsList.value}/> */}
+                                {tagsList.value.map((tag) => {
+                                    return <div class={[s.tag, formDateSubmit.tag?.id === tag.id ? s.selected : '']}
                                                 onClick={()=> onSelect(tag)}
                                                 onTouchmove={onTouchMove} 
                                                 onTouchstart={(e)=>onTouchStart(e, tag)}
@@ -151,9 +117,10 @@ export const ItemCreate = defineComponent({
                                 </RouterLink>
 
                             </Tab>
-                            <Tab name="收入" class={s.tags_wrapper} kind="income">
-                            {refIncomeTags.map((tag) => {
-                                    return <div class={[s.tag, formDateSubmit.tag.tagId === tag.tagId ? s.selected : '']}
+                            <Tab name="收入" class={s.tags_wrapper} value="income">
+                                
+                            {tagsList.value.map((tag) => {
+                                    return <div class={[s.tag, formDateSubmit.tag?.id === tag.id ? s.selected : '']}
                                                 onTouchmove={onTouchMove}
                                                 onClick={()=> onSelect(tag)}
                                                 onTouchstart={(e)=>onTouchStart(e, tag)}
