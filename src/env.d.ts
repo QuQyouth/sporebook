@@ -55,3 +55,8 @@ type ItemFormDate = {
   time: string;
   kind: string
 }
+
+type HashMap = {
+  name: string;
+  value: number
+}

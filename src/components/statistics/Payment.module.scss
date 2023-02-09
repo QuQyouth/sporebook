@@ -18,6 +18,9 @@
         background: var(--tag-bg);
         border-radius: 50%;
     }
+    .amount {
+        width: 64px;
+    }
     .bar_wrapper {
         margin-left: 8px;
         flex-grow: 1;
@@ -41,22 +44,14 @@
             top: 0;
             left: 0;
             height: 100%;
-            width: 42px;
+            // width: 0;
+            transition: width 500ms;
+            background-color: var(--welcome-bg-start);
         }
     }
-    &:nth-child(1) {
-        .bar_inner {
-            background: #eba953;
-        }
-    }
-    &:nth-child(2) {
-        .bar_inner {
-            background: #53a867;
-        }
-    }
-    &:nth-child(3) {
-        .bar_inner {
-            background: #91cc75;
-        }
-    }
+    // &:nth-child(1) {
+    //     .bar_inner {
+    //         background: #eba953;
+    //     }
+    // }
 }

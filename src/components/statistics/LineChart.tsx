@@ -1,8 +1,18 @@
 import { defineComponent, onMounted, PropType, ref } from "vue";
 import s from './LineChart.module.scss';
-import * as echarts from 'echarts'
+import * as echarts from 'echarts';
 import { ItemData } from "./ItemDate";
 export const LineChart = defineComponent({
+  props: {
+    expenditureLineData: {
+      type: Array<String>,
+      required: true,
+    },
+    incomeLineData: {
+      type: Array<String>,
+      required: true,
+    },
+  },
     setup: (props,context) => {
         
         const refLineChart = ref<HTMLDivElement>() 
@@ -15,28 +25,33 @@ export const LineChart = defineComponent({
             const refMonths = ItemData.map((item)=>{
               return Object.assign({},{'time': item.time})
             })
-            console.log(refMonths);
             
 
 
             var myLineChart = echarts.init(refLineChart.value)
             const option = {
                 xAxis: {
-                  data: ['A', 'B', 'C', 'D', 'E']
+                  data: ['1', '5', '10', '15', '20', '25']
                 },
                 yAxis: {},
                 series: [
                   {
-                    data: [10, 22, 28, 23, 19],
-                    type: 'line',
-                    areaStyle: {}
-                  },
-                  {
-                    data: [25, 14, 23, 35, 10],
+                    data: props.expenditureLineData,
                     type: 'line',
                     areaStyle: {
-                      color: '#ff0',
-                      opacity: 0.5
+                      normal:{
+                        opacity: 0.5
+                      }
+                    }
+                  },
+                  {
+                    data: props.incomeLineData,
+                    type: 'line',
+                    areaStyle: {
+                      normal:{
+                        color: '#517b5f',
+                        opacity: 0.5
+                      }
                     }
                   }
                 ]
