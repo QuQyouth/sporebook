@@ -1,12 +1,12 @@
 import { WelcomeLayout } from "./WelcomeLayout";
-import icon from '../../assets/icons/welcomeIcon.png'
+import two from '../../assets/icons/welcome2.png'
 
 export const WelcomeSecond = () => {
     return (
         <WelcomeLayout>
             {{
-                icon:()=> <img src={icon} alt="" />,
-                title:()=><>welcome2</>,
+                icon:()=> <img src={two} alt="" />,
+                title:()=><>纯净记账</>,
             }}
         </WelcomeLayout>
     )

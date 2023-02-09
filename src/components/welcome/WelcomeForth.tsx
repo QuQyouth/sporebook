@@ -1,12 +1,12 @@
 import { WelcomeLayout } from "./WelcomeLayout";
-import icon from '../../assets/icons/welcomeIcon.png'
+import icon from '../../assets/icons/welcome4.jpg'
 
 export const WelcomeForth = () => {
         return (
             <WelcomeLayout>
                 {{
-                    icon:() => <img src={icon} alt="" />,
-                    title:() => <>welcome4</>,
+                    icon:() => <img src={icon} alt="" style={{height: '100%'}} />,
+                    title:() => <>记账提醒</>,
                 }}
             </WelcomeLayout>
         )

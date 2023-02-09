@@ -39,10 +39,10 @@ export const Overlay = defineComponent({
                     <div class={s.overlay}>
                         <section class={s.currentUser}>
                             {email ? (
-                                <div>
+                                <RouterLink to={`/welcome/1`}>
                                     <h2 class={s.email}>{email}</h2>
                                     <p onClick={onSignOut}>点击这里退出登录</p>
-                                </div>
+                                </RouterLink>
                             ):(
                                 <RouterLink to={`/sign_in`}>
                                 <h2>未登录用户</h2>
@@ -54,9 +54,23 @@ export const Overlay = defineComponent({
                         <nav class={s.action}>
                             <ul class={s.action_list}>
                                 <li class={s.action_Item}>
+                                    <RouterLink to="/items/create">
+                                        <Icon name="write" class={s.icon}/>
+                                        记账
+                                    </RouterLink>
+                                    
+                                </li>
+                                <li class={s.action_Item}>
+                                    <RouterLink to="/items">
+                                        <Icon name="money" class={s.icon}/>
+                                        明细
+                                    </RouterLink>
+                                    
+                                </li>
+                                <li class={s.action_Item}>
                                     <RouterLink to="/statistics">
                                         <Icon name="chart" class={s.icon}/>
-                                        统计图表
+                                        统计
                                     </RouterLink>
                                     
                                 </li>

@@ -5,11 +5,11 @@ import { ItemData } from "./ItemDate";
 export const LineChart = defineComponent({
   props: {
     expenditureLineData: {
-      type: Array<String>,
-      required: true,
+      type: Array as PropType<String[]>,
+      required: true
     },
     incomeLineData: {
-      type: Array<String>,
+      type: Array as PropType<String[]>,
       required: true,
     },
   },

@@ -28,14 +28,14 @@ export const PieChart = defineComponent({
       require: true
     },
     incomePieData:{
-      type: Array<HashMap>,
+      type: Array as PropType<HashMap[]>,
       require: true
     }
   },
   setup: (props,context) => {
     const refPieChart = ref<HTMLDivElement>()
 
-    let myPieChart : echarts.ECharts | undefined = undefined
+    let myPieChart:any = undefined
 
     onMounted(() => {
         if(refPieChart.value === undefined) { return }

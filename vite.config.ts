@@ -40,5 +40,6 @@ export default defineConfig({
         target: 'http://121.196.236.94:8080'
       }
     }
-  }
+  },
+  base: '/spore/'
 })

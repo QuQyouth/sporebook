@@ -7,6 +7,8 @@ declare module '*.vue' {
   export default component
 }
 
+declare module 'echarts'
+
 type UserFormData = {
   email: string,
   code: string
