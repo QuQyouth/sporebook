@@ -1,9 +1,12 @@
-import { defineComponent, onMounted, PropType, ref } from "vue";
+import { computed, defineComponent, onMounted, PropType, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { DivideGroup } from "../../shared/DivideGroup";
 import { defaultHttpClient } from "../../shared/HttpClient";
 import { useMeStore } from "../../stores/useMeStore";
+import isBetween from 'dayjs/plugin/isBetween'
 import s from './ItemSummary.module.scss';
+import dayjs from "dayjs";
+dayjs.extend(isBetween)
 export const ItemSummary = defineComponent({
     props: {
         startDate: {
@@ -24,7 +27,9 @@ export const ItemSummary = defineComponent({
         const refTotalExpenditure = ref(0)
         const refTotalIncome = ref(0)
 
-        
+        const timeItemList = computed(()=> ItemList.value.filter((item)=>{
+            return dayjs(item.time).isBetween(props.startDate, props.endDate)
+        }))
 
         onMounted(async () => {
             const result:any = await defaultHttpClient.get("/getItemList")
@@ -51,7 +56,7 @@ export const ItemSummary = defineComponent({
                 </RouterLink>
                 <ol class={s.list}>
                     {
-                        ItemList.value.map((item)=>{
+                        timeItemList.value.map((item)=>{
                             return(
                                 <li>
                                     <div class={s.sign}>{item.kind ==="expenditure" ? "\ud83d\ude43" : "\ud83e\udd11"}</div>

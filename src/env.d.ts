@@ -62,3 +62,5 @@ type HashMap = {
   name: string;
   value: number
 }
+
+type FormErrors<T> = {[K in keyof typeof T]: string[]}

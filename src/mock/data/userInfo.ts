@@ -3,6 +3,21 @@ import {MockMethod} from 'vite-plugin-mock'
 const list:any = [];
 const tagsList:any = []
 const ItemList:any = []
+
+const randomDate = (date1:string, date2:string) => {
+    function randomValueBetween(min:number, max:number) {
+      return Math.random() * (max - min) + min;
+    }
+    let dateN1 = new Date(date1).getTime()
+    let dateN2 = new Date(date2).getTime()
+    if( date1>date2){
+        return new Date(randomValueBetween(dateN2,dateN1)).toLocaleDateString()
+    } else{
+        return new Date(randomValueBetween(dateN1, dateN2)).toLocaleDateString()
+
+    }
+}
+
 for (let i = 0; i < 20; i++) {
     list.push({
         uerId: Random.id(),
@@ -42,15 +57,16 @@ for (let i = 0; i < 10; i++) {
 
 
 // ItemsList
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 40; i++) {
     ItemList.push({
         id: Random.id(),
         kind: Mock.mock(/expenditure|income/),
         name: Mock.mock(/吃饭|购物|交通|住房/),
         amount: Random.natural(1,500).toString(),
-        time: Random.datetime()
+        time: randomDate('01/01/2023','02/14/2023')
     })
 }
+
 export default {
     // 登录
     session: () => {

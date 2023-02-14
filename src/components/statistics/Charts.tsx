@@ -6,7 +6,10 @@ import { LineChart } from "./LineChart";
 import { PieChart } from "./PieChart";
 import { Payment } from "./Payment";
 import { defaultHttpClient } from "../../shared/HttpClient";
-import { DivideGroup, handleData } from "../../shared/DivideGroup";
+import { handleData } from "../../shared/DivideGroup";
+import isBetween from 'dayjs/plugin/isBetween'
+import dayjs from "dayjs";
+dayjs.extend(isBetween)
 export const Charts = defineComponent({
     props: {
         startDate: {
@@ -22,21 +25,28 @@ export const Charts = defineComponent({
         
         const refSelected = ref('支出')
         const ItemList = ref<ItemFormDate[]>([])
-        const expenditureItemList = ref<ItemFormDate[]>([])
-        const incomeItemList = ref<ItemFormDate[]>([])
 
-        const expenditureClassification = ref<HashMap[]>([])
-        const incomeClassification = ref<HashMap[]>([])
+        // const expenditureClassification = ref<HashMap[]>([])
+        // const incomeClassification = ref<HashMap[]>([])
+
+        // isBetween处理过的ItemList
+        const timeItemList = computed(()=> ItemList.value.filter((item)=>{
+            return dayjs(item.time).isBetween(props.startDate, props.endDate)
+        }))
+
+        const expenditureItemList = computed(() => timeItemList.value.filter((item)=> item.kind==='expenditure'))
+        const incomeItemList = computed(() => timeItemList.value.filter((item)=> item.kind==='income'))
+
+        // 分类后的ItemList
+        const expenditureClassification = computed(()=>handleData(expenditureItemList.value, "name", "amount"))
+        const incomeClassification = computed(()=>handleData(incomeItemList.value, "name", "amount"))
 
         const getItemsData = async () => {
             const result:any = await defaultHttpClient.get("/getItemList")
             ItemList.value = result.data.ItemList
-            expenditureItemList.value = DivideGroup(ItemList.value, "kind")[0]
-            incomeItemList.value = DivideGroup(ItemList.value, "kind")[1]
 
-            expenditureClassification.value = handleData(expenditureItemList.value, "name", "amount")
-            incomeClassification.value = handleData(incomeItemList.value, "name", "amount")
-            console.log(incomeClassification.value)
+            // expenditureClassification.value = handleData(expenditureItemList.value, "name", "amount")
+            // incomeClassification.value = handleData(incomeItemList.value, "name", "amount")
 
         }
 

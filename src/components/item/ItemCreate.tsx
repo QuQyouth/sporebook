@@ -9,6 +9,8 @@ import { DivideGroup } from "../../shared/DivideGroup";
 import { defaultHttpClient } from "../../shared/HttpClient";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
+import { hasError, validate } from "../../shared/validate";
+import { ItemData } from "../statistics/ItemDate";
 import { InputPad } from "./InputPad";
 import s from './ItemCreate.module.scss';
 
@@ -17,26 +19,38 @@ export const ItemCreate = defineComponent({
         
         const refKind = ref('支出')
         const router = useRouter()
-        const refSelectedTagId = ref('')
         const formDateSubmit = reactive<ItemFormDate>({
             id: '',
             name: '',
             kind: 'expenditure',
-            // tagId: refSelectedTagId.value,
             amount: '',
             time: ''
         })
         const onError = () => {
             Dialog.alert({ title: '提示', message: '创建失败' })
-          }
+        }
+        
+        const errors = reactive<FormErrors<typeof formDateSubmit>>({ kind: [], id: [], amount: [], time: [] })
         const onSubmit = async () => {
+            Object.assign(errors, { kind: '', id: '', amount: '', time: '' })
+            Object.assign(errors, validate(formDateSubmit, [
+                { key: 'kind', type: 'required', message: '类型必填' },
+                { key: 'id', type: 'required', message: '标签必填' },
+                { key: 'amount', type: 'required', message: '金额必填' },
+            ]))
+            if(hasError(errors)){
+                Dialog.alert({
+                  message: Object.values(errors).filter(i=>i.length>0).join('\n')
+                })
+                return
+            }
             await defaultHttpClient.post('/ItemCreate', formDateSubmit).catch(onError)
             router.push('/items')
             
         }
 
         const onSelect = (tag:Tag) => {
-            refSelectedTagId.value = tag.id
+            formDateSubmit.id = tag.id
         }
         
         const timer = ref<number>()
@@ -83,7 +97,7 @@ export const ItemCreate = defineComponent({
                             <Tab name="支出" class={s.tags_wrapper} 
                             value="expenditure">
                                 {expenditureTags.value.map((tag) => {
-                                    return <div class={[s.tag, refSelectedTagId.value === tag.id ? s.selected : '']}
+                                    return <div class={[s.tag, formDateSubmit.id === tag.id ? s.selected : '']}
                                                 onClick={()=> onSelect(tag)}
                                                 onTouchmove={onTouchMove} 
                                                 onTouchstart={(e)=>onTouchStart(e, tag)}
@@ -108,7 +122,7 @@ export const ItemCreate = defineComponent({
                             <Tab name="收入" class={s.tags_wrapper} value="income">
                                 
                             {incomeTags.value.map((tag) => {
-                                    return <div class={[s.tag, refSelectedTagId.value === tag.id ? s.selected : '']}
+                                    return <div class={[s.tag, formDateSubmit.id === tag.id ? s.selected : '']}
                                                 onTouchmove={onTouchMove}
                                                 onClick={()=> onSelect(tag)}
                                                 onTouchstart={(e)=>onTouchStart(e, tag)}
