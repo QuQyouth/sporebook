@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 import axios from "axios";
 import { Dialog } from "vant";
-import { defineComponent, onMounted, reactive, ref } from "vue";
+import { computed, defineComponent, onMounted, reactive, ref } from "vue";
 import { RouterLink, useRoute, useRouter } from "vue-router";
 import { MainLayout } from "../../layouts/MainLayout";
 import { BackIcon } from "../../shared/BackIcon";
@@ -64,6 +64,8 @@ export const ItemCreate = defineComponent({
         }
         
         const tagsList = ref<Tag[]>([])
+        const expenditureTags = computed(() => tagsList.value.filter((tag)=>tag.kind === 'expenditure'))
+        const incomeTags = computed(() => tagsList.value.filter((tag)=>tag.kind === 'income'))
         
         onMounted(async () => {
             const result:any = await defaultHttpClient.get("/getTagsList")
@@ -80,7 +82,7 @@ export const ItemCreate = defineComponent({
                         >
                             <Tab name="支出" class={s.tags_wrapper} 
                             value="expenditure">
-                                {tagsList.value.map((tag) => {
+                                {expenditureTags.value.map((tag) => {
                                     return <div class={[s.tag, refSelectedTagId.value === tag.id ? s.selected : '']}
                                                 onClick={()=> onSelect(tag)}
                                                 onTouchmove={onTouchMove} 
@@ -105,7 +107,7 @@ export const ItemCreate = defineComponent({
                             </Tab>
                             <Tab name="收入" class={s.tags_wrapper} value="income">
                                 
-                            {tagsList.value.map((tag) => {
+                            {incomeTags.value.map((tag) => {
                                     return <div class={[s.tag, refSelectedTagId.value === tag.id ? s.selected : '']}
                                                 onTouchmove={onTouchMove}
                                                 onClick={()=> onSelect(tag)}
