@@ -63,7 +63,7 @@ for (let i = 0; i < 40; i++) {
         kind: Mock.mock(/expenditure|income/),
         name: Mock.mock(/吃饭|购物|交通|住房/),
         amount: Random.natural(1,500).toString(),
-        time: randomDate('01/01/2023','04/30/2023')
+        time: randomDate('03/01/2023','04/30/2023')
     })
 }
 
