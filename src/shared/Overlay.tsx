@@ -1,6 +1,6 @@
 import { Dialog } from "vant";
 import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { Icon } from "../shared/Icon";
 import { useMeStore } from "../stores/useMeStore";
 import s from './Overlay.module.scss';
@@ -12,6 +12,7 @@ export const Overlay = defineComponent({
         }
     },
     setup: (props,context) => {
+        const router = useRouter()
         const currentStore = useMeStore()
         const {email} = currentStore
         const closeOverlay = () => {
@@ -27,7 +28,11 @@ export const Overlay = defineComponent({
                 
                 localStorage.removeItem('jwt')
                 window.location.reload()
-            })
+            }).catch(async () => {
+                router.push('/start')
+            }
+                
+            )
 
         }
         onMounted(async () => {
