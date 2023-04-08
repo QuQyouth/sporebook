@@ -31,25 +31,25 @@ export const routes: RouteRecordRaw[] = [
             { path: '4', name:'Welcome4', components: { main: WelcomeForth, footer: ActionsForth }, },
         ]
     },
-    {path:'/start', component: StartPage},
+    {path:'/start', name:'Start', component: StartPage},
     {
-        path: '/items', component: ItemPage,
+        path: '/items', name:'Items', component: ItemPage,
         children: [
-            {path: '', component: ItemList},
-            {path: 'create', component: ItemCreate}
+            {path: '', name:'ItemList', component: ItemList},
+            {path: 'create', name:'ItemCreate', component: ItemCreate}
         ]
     },
     {
-        path: '/tags', component: TagPage,
+        path: '/tags', name:'Tags', component: TagPage,
         children: [
-            {path: 'create', component: TagCreate},
-            {path: ':id/edit', component: TagEdit}
+            {path: 'create', name:'TagCreate', component: TagCreate},
+            {path: ':id/edit', name:'TagEdit', component: TagEdit}
         ]
     },
     {
-        path: '/sign_in', component: SignInPage
+        path: '/sign_in',name:'SignIn', component: SignInPage
     },
     {
-        path: '/statistics', component: StatisticsPage
+        path: '/statistics', name:'StatisticsPage', component: StatisticsPage
     }
 ]
